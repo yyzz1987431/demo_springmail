@@ -3,6 +3,9 @@ package config;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,17 +22,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement // 使用事务管理器
 public class JdbcConfig {
 	
-	private DriverManagerDataSource dataSource;
+	@Resource
+	private DataSource dataSource;
 
 	/**
 	 * 无参构造方法, 初始化datasource信息
 	 */
-	public JdbcConfig() {
-		dataSource = new DriverManagerDataSource();
+	@Bean
+	public DataSource dataSourceConfig() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(getProperties().get("jdbc.driver").toString());
 		dataSource.setUrl(getProperties().get("jdbc.url").toString());
 		dataSource.setUsername(getProperties().get("jdbc.username").toString());
 		dataSource.setPassword(getProperties().get("jdbc.password").toString());
+		return dataSource;
 	}
 	
 	/**
