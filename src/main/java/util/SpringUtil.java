@@ -3,7 +3,7 @@ package util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import config.JdbcConfig;
+import config.SpringConfig;
 
 /**
  * spring工具类
@@ -18,8 +18,7 @@ public class SpringUtil {
 	 */
 	public static ApplicationContext getApplicationContext(){
 		if (context == null) {
-			context = new AnnotationConfigApplicationContext(JdbcConfig.class);
-			context.scan("..");	// 扫描全部包的注解
+			context = new AnnotationConfigApplicationContext(SpringConfig.class);
 		}
 		return context;
 	}
